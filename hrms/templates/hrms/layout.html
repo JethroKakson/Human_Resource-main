@@ -19,9 +19,18 @@
   
 <body>
   <div class="container-scroller">
-    {% include "hrms/navbar.html" %}
+      {% include "hrms/nav.html" %}
+    <br>
+    <br>
+    <br>
     <div class="page-body-wrapper py-0">
-      {% include 'hrms/sidebar.html' %}
+      {% if user.is_authenticated and user.is_superuser %}
+        {% include 'hrms/sidebar.html' %}
+      {% elif user.is_authenticated and user.is_staff and not user.is_superuser %}
+        {% include 'hrms/employee_sidebar.html' %}
+      {% else %}
+        {% include 'hrms/user_sidebar.html' %}
+      {% endif %}
       <div class="content-wrapper">
         {% block content %} {% endblock content %}
       </div>

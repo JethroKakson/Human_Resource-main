@@ -71,7 +71,9 @@
 
  <!--CONTENTS-->
  {% block content %}
-        <section class="content">
+<div class="row">
+    <div class="row">
+    <section class="content">
             <section class="container-fluid">
             	<section class="row">
             		{% if request.user.is_superuser and request.user.is_staff %}
@@ -80,7 +82,7 @@
             				<a href="">
             				<span>Employees </span>
             				</a>
-            				<span class="count-object">{{ employees.count }}</span> 
+            				<span class="count-object">{{ employees.count }}</span>
             			</div>
             		</section>
             		<section class="col col-lg-4">
@@ -88,7 +90,7 @@
             				<a href="">
             				<span>Leaves</span>
             				</a>
-                            <span class="count-object" style="color:#41b6d6;">{{ leaves.count }}</span> 
+                            <span class="count-object" style="color:#41b6d6;">{{ leaves.count }}</span>
             			</div>
             		</section>
             		<section class="col col-lg-4">
@@ -105,7 +107,7 @@
                             <a href="">
                             <span>Leaves</span>
                             </a>
-                            <span class="count-object" style="color:#41b6d6;">{{ staff_leaves.count }}</span> 
+                            <span class="count-object" style="color:#41b6d6;">{{ staff_leaves.count }}</span>
                         </div>
                     </section>
                     <section class="col col-lg-6">
@@ -120,11 +122,13 @@
 
             	</section>
 
-                
 
 
-            </section> <!-- /container -->           
+
+            </section> <!-- /container -->
         </section>
+</div>
+
  {% endblock %}
 
 

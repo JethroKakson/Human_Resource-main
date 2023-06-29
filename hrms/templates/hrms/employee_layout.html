@@ -10,24 +10,21 @@
   <!-- plugins:css -->
   <link rel="stylesheet" href="{% static 'hrms/vendors/iconfonts/mdi/css/materialdesignicons.min.css' %} ">
   <link rel="stylesheet" href="{% static 'hrms/vendors/iconfonts/font-awesome/css/font-awesome.css' %} ">
- 
-  
+
+
   <link rel="stylesheet" href="{% static 'hrms/css/style.css' %}">
   <link rel="stylesheet" href="{% static 'hrms/css/toastr.min.css' %}">
   <link rel="shortcut icon" href="{% static 'hrms/images/favicon.png' %}" />
-
-  <style>
-    .nav_item:clicked{
-      background: white;
-    }
-  </style>
 </head>
-  
+
 <body>
   <div class="container-scroller">
-    {% include "hrms/user_nav.html" %}
+      {% include "hrms/nav.html" %}
+    <br>
+    <br>
+    <br>
     <div class="page-body-wrapper py-0">
-      {% include 'hrms/user_sidebar.html' %}
+        {% include 'hrms/employee_sidebar.html' %}
       <div class="content-wrapper">
         {% block content %} {% endblock content %}
       </div>
@@ -40,7 +37,7 @@
         </div>
     </div>
   <!-- plugins:js -->
-  
+
   <script src="{% static 'hrms/vendors/js/vendor.bundle.base.js' %}"></script>
   <script src="{% static 'hrms/vendors/js/vendor.bundle.addons.js' %}"></script>
   <script src="{% static 'hrms/js/toastr.min.js' %}"></script>

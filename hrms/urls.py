@@ -10,11 +10,14 @@ urlpatterns = [
     path('admin-register/', views.register, name='reg'),
     path('admin-login/', views.login_view, name='login'),
     path('login/', views.user_login_view, name='user_login'),
+    path('employee_login/', views.employee_login_view, name='employee_login'),
     path('signup/', views.user_register_view, name='user_reg'),
     path('logout/', views.Logout_View.as_view(), name='logout'),
     path('user_logout/', views.User_Logout_View.as_view(), name='user_logout'),
+    path('employee_logout/', views.Employee_Logout_View.as_view(), name='employee_logout'),
     path('dashboard/', views.Dashboard.as_view(), name='dashboard'),
     path('user-page/', views.User_page.as_view(), name='user_home'),
+    path('employee-page/', views.Employee_page.as_view(), name='employee_home'),
 
 #     test
     path('userprofile/<int:pk>/', views.user_profile, name='updateprofile'),

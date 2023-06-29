@@ -14,6 +14,7 @@ from .forms import RegistrationForm, LoginForm, EmployeeForm, KinForm, Departmen
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 
+
 # LEAVES
 from leave.forms import LeaveCreationForm
 from django.shortcuts import render,redirect,get_object_or_404
@@ -87,6 +88,24 @@ def user_login_view(request):
             msg = 'error occured'
     return render(request, 'hrms/registrations/user_login.html', {'form': form})
 
+
+def employee_login_view(request):
+    form = LoginForm(request.POST or None)
+    msg = None
+    if request.method == 'POST':
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None and user.is_staff:
+                login(request, user)
+                return redirect('hrms:employee_home')
+            else:
+                msg = 'invalid credentials'
+        else:
+            msg = 'error occured'
+    return render(request, 'hrms/registrations/employee_login.html', {'form': form})
+
 def user_profile(request, pk):
     user = User.objects.get(id=pk)
     if user.is_authenticated:
@@ -119,6 +138,10 @@ def user_register_view(request):
 class User_page(TemplateView):
    template_name = 'hrms/user/home.html'
 
+
+class Employee_page(TemplateView):
+   template_name = 'hrms/employee/index.html'
+
 class Logout_View(View):
     def get(self,request):
         logout(self.request)
@@ -128,6 +151,12 @@ class User_Logout_View(View):
     def get(self,request):
         logout(self.request)
         return redirect ('hrms:user_login',permanent=True)
+
+
+class Employee_Logout_View(View):
+    def get(self,request):
+        logout(self.request)
+        return redirect ('hrms:employee_login',permanent=True)
     
     
  # Main Board   
@@ -432,7 +461,7 @@ def leaves_view(request,id):
         return redirect('/')
 
     leave = get_object_or_404(Leave, id = id)
-    employee = User.objects.filter(username = leave.user)[0]
+    employee = Employee.objects.filter(first_name = leave.user)[0]
     # employee = User.objects.get(id=id)
     print(employee)
     return render(request,'hrms/dashboard/leave_detail_view.html',{'leave':leave,'employee':employee,'title':'{0}-{1} leave'.format(leave.user.username,leave.status)})
@@ -443,7 +472,7 @@ def approve_leave(request,id):
         return redirect('/')
     leave = get_object_or_404(Leave, id = id)
     user = leave.user
-    employee = User.objects.filter(username = user)[0]
+    employee = Employee.objects.filter(first_name = user)[0]
     # employee = User.objects.get(id=id)
     leave.approve_leave
 
@@ -527,7 +556,7 @@ def view_my_leave_table(request):
     if request.user.is_authenticated:
         user = request.user
         leaves = Leave.objects.filter(user = user)
-        employee = User.objects.filter(username = user).first()
+        employee = Employee.objects.filter(first_name = user).first()
         print(leaves)
         dataset = dict()
         dataset['leave_list'] = leaves
