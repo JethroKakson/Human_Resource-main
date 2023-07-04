@@ -13,10 +13,10 @@ class RegistrationForm(UserCreationForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control','placeholder':'Valid Email is required'}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'Password'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'Confirm Password'}))
-    thumb = forms.ImageField(label='Attach a Passport Photograph',widget=forms.ClearableFileInput(attrs={'class':'form-control'}))
+    thumb = forms.ImageField(label='Attach a Passport Photograph', required=True, widget=forms.FileInput(attrs={'class':'form-control mt-2'}))
     class Meta:
         model = get_user_model()
-        fields = ('username','email','password1', 'password2')
+        fields = ('username','email','password1', 'password2', 'thumb')
 
 class LoginForm(forms.Form):
    username = forms.CharField(widget=forms.TextInput(attrs={'autofocus':True, 'placeholder':'Username Here', 'class':'form-control'}))

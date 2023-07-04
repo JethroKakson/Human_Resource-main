@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from .models import Employee, Department,Kin, Attendance, Recruitment, Application
 from django.contrib.auth.views import LoginView
-from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth import logout, authenticate, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import FormView, CreateView,View,DetailView,TemplateView,ListView,UpdateView,DeleteView
 from .forms import RegistrationForm, LoginForm, EmployeeForm, KinForm, DepartmentForm, AttendanceForm, \
@@ -28,30 +28,30 @@ class Index(TemplateView):
    template_name = 'hrms/home/home.html'
 
 #   Authentication
-# class Register (CreateView):
-#     model = User
-#     form_class  = RegistrationForm
-#     template_name = 'hrms/registrations/register.html'
-#     success_url = reverse_lazy('hrms:login')
-#
+class Register (CreateView):
+    model = User
+    form_class  = RegistrationForm
+    template_name = 'hrms/registrations/register.html'
+    success_url = reverse_lazy('hrms:login')
+
 # class Login_View(LoginView):
 #     model = User
 #     form_class = LoginForm
 #     template_name = 'hrms/registrations/login.html'
 
-def register(request):
-    msg = None
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            msg = 'user created'
-            return redirect('hrms:login')
-        else:
-            msg = 'form is not valid'
-    else:
-        form = RegistrationForm
-    return render(request, 'hrms/registrations/register.html', {'form': form})
+# def register(request):
+#     msg = None
+#     if request.method == 'POST':
+#         form = RegistrationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             msg = 'user created'
+#             return redirect('hrms:login')
+#         else:
+#             msg = 'form is not valid'
+#     else:
+#         form = RegistrationForm
+#     return render(request, 'hrms/registrations/register.html', {'form': form})
 
 
 def login_view(request):
@@ -121,19 +121,26 @@ def user_profile(request, pk):
     return render(request, 'hrms/user_profile.html', {'form': form})
 
 
-def user_register_view(request):
-    msg = None
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            msg = 'user created'
-            return redirect('hrms:user_login')
-        else:
-            msg = 'form is not valid'
-    else:
-        form = RegistrationForm
-    return render(request, 'hrms/registrations/user_register.html', {'form': form})
+# def user_register_view(request):
+#     msg = None
+#     if request.method == 'POST':
+#         form = RegistrationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             msg = 'user created'
+#             return redirect('hrms:user_login')
+#         else:
+#             msg = 'form is not valid'
+#     else:
+#         form = RegistrationForm
+#     return render(request, 'hrms/registrations/user_register.html', {'form': form})
+
+
+class User_Register(CreateView):
+    model = User
+    form_class  = RegistrationForm
+    template_name = 'hrms/registrations/user_register.html'
+    success_url = reverse_lazy('hrms:user_login')
 
 class User_page(TemplateView):
    template_name = 'hrms/user/home.html'
@@ -163,7 +170,7 @@ class Employee_Logout_View(View):
 class Dashboard(LoginRequiredMixin,ListView):
     template_name = 'hrms/dashboard/index.html'
     login_url = 'hrms:login'
-    model = User
+    model = get_user_model()
     context_object_name = 'qset'            
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs) 

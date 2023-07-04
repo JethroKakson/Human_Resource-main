@@ -5,13 +5,14 @@ urlpatterns = [
 
 # Authentication Routes
     path('', views.Index.as_view(), name='index'),
-    # path('register/', views.Register.as_view(), name='reg'),
+    path('register/', views.Register.as_view(), name='reg'),
     # path('login/', views.Login_View.as_view(), name='login'),
-    path('admin-register/', views.register, name='reg'),
+    # path('admin-register/', views.register, name='reg'),
     path('admin-login/', views.login_view, name='login'),
     path('login/', views.user_login_view, name='user_login'),
     path('employee_login/', views.employee_login_view, name='employee_login'),
-    path('signup/', views.user_register_view, name='user_reg'),
+    # path('signup/', views.user_register_view, name='user_reg'),
+    path('signup/', views.User_Register.as_view(), name='user_reg'),
     path('logout/', views.Logout_View.as_view(), name='logout'),
     path('user_logout/', views.User_Logout_View.as_view(), name='user_logout'),
     path('employee_logout/', views.Employee_Logout_View.as_view(), name='employee_logout'),
