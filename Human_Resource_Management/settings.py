@@ -90,9 +90,9 @@ DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'HRM1',
-            'HOST':'127.0.0.1',
-            'USER':'root',
-            'PASSWORD':'',
+            'HOST':'avvento.mysql.pythonanywhere-services.com',
+            'USER':'avvento',
+            'PASSWORD':'@#$1234avve',
             'PORT':'3306',
         }
 }
